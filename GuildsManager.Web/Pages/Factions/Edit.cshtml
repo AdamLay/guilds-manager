@@ -1,0 +1,102 @@
+@page
+@using GuildsManager.Web.Data
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model GuildsManager.Web.Pages.Factions.EditModel
+
+@{
+  ViewData["Title"] = "Edit";
+  IEnumerable<SelectListItem> forceItems = Enum
+    .GetValues<Forces>()
+    .Select(x => new SelectListItem {Value = ((byte) x).ToString(), Text = x.ToString()});
+}
+
+<h1>Edit Faction</h1>
+
+<hr/>
+
+<form method="post">
+  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+  <div class="row">
+    <div class="col-md-6">
+
+      <input type="hidden" asp-for="Faction.Id"/>
+      <div class="form-group">
+        <label asp-for="Faction.Name" class="control-label"></label>
+        <input asp-for="Faction.Name" class="form-control"/>
+        <span asp-validation-for="Faction.Name" class="text-danger"></span>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label asp-for="Faction.Force" class="control-label"></label>
+        <select asp-for="Faction.Force" class="form-control" asp-items="@forceItems"></select>
+        <span asp-validation-for="Faction.Force" class="text-danger"></span>
+      </div>
+    </div>
+  </div>
+  <div class="form-group mt-4 text-end">
+    <input type="submit" value="Save Changes" class="btn btn-primary"/>
+  </div>
+</form>
+
+
+<hr/>
+
+<p class="text-end">
+  <a class="btn btn-primary" asp-page="/ModelCards/Create" asp-route-factionId="@Model.Faction.Id">Create New Model Card</a>
+</p>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Keywords</th>
+    <th>Slots</th>
+    <th>Unit Number</th>
+    <th>Might</th>
+    <th>Dex</th>
+    <th>Will</th>
+    <th>Def</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  @foreach (var item in Model.ModelCards)
+  {
+    <tr>
+      <td>
+        @Html.DisplayFor(modelItem => item.Name)
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.Keywords)
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.Slots)
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.UnitNumber)
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.Might)
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.Dex)
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.Will)
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.Def)
+      </td>
+      <td>
+        <a asp-page="/ModelCards/Edit" asp-route-id="@item.Id">Edit</a> |
+        <a asp-page="/ModelCards/Delete" asp-route-id="@item.Id">Delete</a>
+      </td>
+    </tr>
+  }
+  </tbody>
+</table>
+
+<div>
+  <a asp-page="./Index">Back to List</a>
+</div>

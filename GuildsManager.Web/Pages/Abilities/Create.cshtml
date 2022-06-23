@@ -1,0 +1,56 @@
+@page
+@model GuildsManager.Web.Pages.Abilities.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Ability</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Ability.CardId" class="control-label"></label>
+                <input asp-for="Ability.CardId" class="form-control" />
+                <span asp-validation-for="Ability.CardId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ability.Name" class="control-label"></label>
+                <input asp-for="Ability.Name" class="form-control" />
+                <span asp-validation-for="Ability.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ability.Text" class="control-label"></label>
+                <input asp-for="Ability.Text" class="form-control" />
+                <span asp-validation-for="Ability.Text" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Ability.Passive" /> @Html.DisplayNameFor(model => model.Ability.Passive)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Ability.Fatigue" /> @Html.DisplayNameFor(model => model.Ability.Fatigue)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Ability.Torment" /> @Html.DisplayNameFor(model => model.Ability.Torment)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+

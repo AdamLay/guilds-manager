@@ -1,0 +1,30 @@
+@page
+@model GuildsManager.Web.Pages.ModelCards.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit Model Card</h1>
+
+<hr/>
+
+<form method="post">
+  <div asp-validation-summary="All" class="text-danger"></div>
+
+  <div class="row">
+    
+    <input type="hidden" asp-for="ViewModel.Id" />
+    
+    <partial name="_Fields" model="Model.ViewModel" />
+    
+    <div class="form-group mt-4">
+      <input type="submit" value="Save Changes" class="btn btn-primary"/>
+    </div>
+  </div>
+</form>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+

@@ -1,0 +1,61 @@
+@page
+@model GuildsManager.Web.Pages.Attacks.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Attack</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Attack.CardId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Attack.CardId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Attack.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Attack.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Attack.Attacks)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Attack.Attacks)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Attack.AoE)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Attack.AoE)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Attack.Range)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Attack.Range)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Attack.Arc)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Attack.Arc)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Attack.Element)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Attack.Element)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Attack?.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
