@@ -11,7 +11,21 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
-builder.Services.AddDbContext<GuildsDbContext>(options => { options.UseSqlServer(conn); });
+builder.Services.AddDbContext<GuildsDbContext>(options =>
+{
+  //options.UseSqlServer(conn);
+  options.UseInMemoryDatabase("Guilds");
+});
+
+builder.Services.AddCors(options =>
+{
+  options.AddDefaultPolicy(policy =>
+  {
+    policy.AllowAnyOrigin();
+    policy.AllowAnyMethod();
+    policy.AllowAnyHeader();
+  });
+});
 
 WebApplication app = builder.Build();
 
@@ -25,6 +39,8 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseStaticFiles();
+
+app.UseCors();
 
 app.UseRouting();
 
@@ -41,14 +57,14 @@ app.MapGet("/api/factions", async (GuildsDbContext context) =>
   return Results.Ok(factions);
 });
 
-app.MapGet("/api/model-cards", async ([FromQuery] short factionId, GuildsDbContext context) =>
+app.MapGet("/api/model-cards", async ([FromQuery] short? factionId, GuildsDbContext context) =>
 {
-  List<ModelCard> modelCards = await context
-    .ModelCards
-    .Where(x => x.FactionId == factionId)
-    .ToListAsync();
+  DbSet<ModelCard> modelCards = context
+    .ModelCards;
 
-  return Results.Ok(modelCards);
+  return Results.Ok(factionId.HasValue
+    ? modelCards.Where(x => x.FactionId == factionId).ToList()
+    : modelCards.ToList());
 });
 
 app.Run();
