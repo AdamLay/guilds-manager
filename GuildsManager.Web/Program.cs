@@ -1,10 +1,12 @@
+using AutoMapper;
 using GuildsManager.Web.Data;
+using GuildsManager.Web.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-string conn = builder.Configuration.GetConnectionString("Heroku");//"Local");
+string conn = builder.Configuration.GetConnectionString("Heroku"); //"Local");
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -69,16 +71,19 @@ app.MapGet("/api/factions", async (GuildsDbContext context) =>
   return Results.Ok(factions);
 });
 
-app.MapGet("/api/model-cards", async ([FromQuery] short? factionId, GuildsDbContext context) =>
+app.MapGet("/api/model-cards", async ([FromQuery] short? factionId,
+  GuildsDbContext context, IMapper mapper) =>
 {
   var modelCards = context
     .ModelCards
     .Include(x => x.Attacks)
     .Include(x => x.Abilities);
 
-  return Results.Ok(factionId.HasValue
+  var results = factionId.HasValue
     ? modelCards.Where(x => x.FactionId == factionId).ToList()
-    : modelCards.ToList());
+    : modelCards.ToList();
+
+  return Results.Ok(results.Select(x => mapper.Map<ModelCardResponse>(x)));
 });
 
 app.Run();

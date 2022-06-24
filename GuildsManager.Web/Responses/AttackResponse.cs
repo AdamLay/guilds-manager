@@ -1,19 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+﻿using GuildsManager.Web.Data;
 
-namespace GuildsManager.Web.Data;
+namespace GuildsManager.Web.Responses;
 
-public class Attack
+public class AttackResponse
 {
-  [Key]
-  public short Id { get; set; }
-  
+  public short? Id { get; set; }
   public short CardId { get; set; }
-  [JsonIgnore]
-  public ModelCard Card { get; set; }
-  
-  [MaxLength(64)]
   public string Name { get; set; }
+
   public byte Attacks { get; set; }
   public bool AoE { get; set; }
   public byte? MinRange { get; set; }
