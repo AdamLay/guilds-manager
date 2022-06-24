@@ -3,6 +3,7 @@ using System;
 using GuildsManager.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GuildsManager.Web.Migrations
 {
     [DbContext(typeof(GuildsDbContext))]
-    partial class GuildsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220624170613_ArcNullable")]
+    partial class ArcNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,9 +83,6 @@ namespace GuildsManager.Web.Migrations
 
                     b.Property<int?>("Element")
                         .HasColumnType("integer");
-
-                    b.Property<byte?>("MinRange")
-                        .HasColumnType("smallint");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -163,11 +162,6 @@ namespace GuildsManager.Web.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
 
-                    b.Property<string>("RW")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
-
                     b.Property<bool>("Shield")
                         .HasColumnType("boolean");
 
@@ -185,6 +179,30 @@ namespace GuildsManager.Web.Migrations
                     b.HasIndex("FactionId");
 
                     b.ToTable("ModelCards");
+                });
+
+            modelBuilder.Entity("GuildsManager.Web.Data.ResistanceWeakness", b =>
+                {
+                    b.Property<short>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<short>("Id"));
+
+                    b.Property<short>("CardId")
+                        .HasColumnType("smallint");
+
+                    b.Property<int>("Effect")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Element")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardId");
+
+                    b.ToTable("ResistancesWeaknesses");
                 });
 
             modelBuilder.Entity("GuildsManager.Web.Data.Ability", b =>
@@ -220,11 +238,24 @@ namespace GuildsManager.Web.Migrations
                     b.Navigation("Faction");
                 });
 
+            modelBuilder.Entity("GuildsManager.Web.Data.ResistanceWeakness", b =>
+                {
+                    b.HasOne("GuildsManager.Web.Data.ModelCard", "Card")
+                        .WithMany("ResistancesWeaknesses")
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Card");
+                });
+
             modelBuilder.Entity("GuildsManager.Web.Data.ModelCard", b =>
                 {
                     b.Navigation("Abilities");
 
                     b.Navigation("Attacks");
+
+                    b.Navigation("ResistancesWeaknesses");
                 });
 #pragma warning restore 612, 618
         }

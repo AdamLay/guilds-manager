@@ -1,48 +1,52 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using GuildsManager.Web.Data;
+using GuildsManager.Web.ViewModels.Abilities;
 
 namespace GuildsManager.Web.Pages.Abilities
 {
 	public class CreateModel : PageModel
 	{
 		private readonly GuildsDbContext _context;
+		private readonly IMapper _mapper;
 
-		public CreateModel(GuildsDbContext context)
+		public CreateModel(GuildsDbContext context, IMapper mapper)
 		{
 			_context = context;
+			_mapper = mapper;
 		}
 
-		public async Task<IActionResult> OnGet(short id)
+		[BindProperty]
+		public AbilityViewModel ViewModel { get; set; } = new();
+		public ModelCard? ModelCard { get; set; }
+		
+		public async Task<IActionResult> OnGet(short cardId)
 		{
-			var modelCard = await _context.ModelCards.FindAsync(id);
+			ModelCard = await _context.ModelCards.FindAsync(cardId);
 
-			if (modelCard is null)
-				return NotFound("Model card not found for id: " + id);
+			if (ModelCard is null)
+				return NotFound("Model card not found for id: " + cardId);
+
+			ViewModel.CardId = cardId;
 
 			return Page();
 		}
 
-		[BindProperty]
-		public Ability Ability { get; set; } = default!;
-
-
 		public async Task<IActionResult> OnPostAsync()
 		{
-			if (!ModelState.IsValid || _context.Abilities == null || Ability == null)
+			if (!ModelState.IsValid || _context.Abilities == null || ViewModel == null)
 			{
 				return Page();
 			}
 
-			_context.Abilities.Add(Ability);
+			var entity = _mapper.Map<Ability>(ViewModel);
+
+			_context.Abilities.Add(entity);
+			
 			await _context.SaveChangesAsync();
 
-			return RedirectToPage("./Index");
+			return RedirectToPage("/ModelCards/Edit", new { id = ViewModel.CardId });
 		}
 	}
 }

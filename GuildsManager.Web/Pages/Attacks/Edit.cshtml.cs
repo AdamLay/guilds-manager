@@ -1,76 +1,68 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GuildsManager.Web.Data;
+using GuildsManager.Web.ViewModels.Attacks;
 
 namespace GuildsManager.Web.Pages.Attacks
 {
-    public class EditModel : PageModel
+  public class EditModel : PageModel
+  {
+    private readonly GuildsDbContext _context;
+    private readonly IMapper _mapper;
+
+    public EditModel(GuildsDbContext context, IMapper mapper)
     {
-        private readonly GuildsManager.Web.Data.GuildsDbContext _context;
-
-        public EditModel(GuildsManager.Web.Data.GuildsDbContext context)
-        {
-            _context = context;
-        }
-
-        [BindProperty]
-        public Attack Attack { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(short? id)
-        {
-            if (id == null || _context.Attacks == null)
-            {
-                return NotFound();
-            }
-
-            var attack =  await _context.Attacks.FirstOrDefaultAsync(m => m.Id == id);
-            if (attack == null)
-            {
-                return NotFound();
-            }
-            Attack = attack;
-            return Page();
-        }
-
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            _context.Attach(Attack).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AttackExists(Attack.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool AttackExists(short id)
-        {
-          return (_context.Attacks?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+      _context = context;
+      _mapper = mapper;
     }
+
+    [BindProperty] public AttackViewModel ViewModel { get; set; } = new();
+    public ModelCard? ModelCard { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(short? id)
+    {
+      if (id == null || _context.Attacks == null)
+      {
+        return NotFound();
+      }
+
+      Attack? entity = await _context.Attacks.FirstOrDefaultAsync(m => m.Id == id);
+      if (entity == null)
+      {
+        return NotFound();
+      }
+
+      ModelCard = await _context.ModelCards.FindAsync(entity.CardId);
+
+      ViewModel = _mapper.Map<AttackViewModel>(entity);
+
+      return Page();
+    }
+    
+    public async Task<IActionResult> OnPostAsync()
+    {
+      if (!ModelState.IsValid)
+      {
+        return Page();
+      }
+
+      Attack? original = await _context
+        .Attacks
+        .AsNoTracking()
+        .FirstOrDefaultAsync(m => m.Id == ViewModel.Id.Value);
+
+      if (original is null)
+        return NotFound();
+
+      Attack entity = _mapper.Map(ViewModel, original);
+
+      _context.Attach(entity).State = EntityState.Modified;
+
+      await _context.SaveChangesAsync();
+
+      return RedirectToPage("/ModelCards/Edit", new { id = ViewModel.CardId });
+    }
+  }
 }

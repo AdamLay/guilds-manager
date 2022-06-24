@@ -23,8 +23,12 @@ public class ModelCardViewModel
   public bool IgnoreDifficultTerrain { get; set; }
   public bool Levitating { get; set; }
   
-  public byte Will { get; set; }
-  
   public byte Def { get; set; }
   public bool Shield { get; set; }
+  
+  public byte Will { get; set; }
+  
+  public byte HeroicWounds { get; set; }
+  
+  public string RW { get; set; }
 }

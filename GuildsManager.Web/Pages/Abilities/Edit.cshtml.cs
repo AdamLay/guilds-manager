@@ -1,76 +1,68 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GuildsManager.Web.Data;
+using GuildsManager.Web.ViewModels.Abilities;
 
 namespace GuildsManager.Web.Pages.Abilities
 {
-    public class EditModel : PageModel
+  public class EditModel : PageModel
+  {
+    private readonly GuildsDbContext _context;
+    private readonly IMapper _mapper;
+
+    public EditModel(GuildsDbContext context, IMapper mapper)
     {
-        private readonly GuildsManager.Web.Data.GuildsDbContext _context;
-
-        public EditModel(GuildsManager.Web.Data.GuildsDbContext context)
-        {
-            _context = context;
-        }
-
-        [BindProperty]
-        public Ability Ability { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(short? id)
-        {
-            if (id == null || _context.Abilities == null)
-            {
-                return NotFound();
-            }
-
-            var ability =  await _context.Abilities.FirstOrDefaultAsync(m => m.Id == id);
-            if (ability == null)
-            {
-                return NotFound();
-            }
-            Ability = ability;
-            return Page();
-        }
-
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            _context.Attach(Ability).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AbilityExists(Ability.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool AbilityExists(short id)
-        {
-          return (_context.Abilities?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+      _context = context;
+      _mapper = mapper;
     }
+
+    [BindProperty] public AbilityViewModel ViewModel { get; set; } = new();
+    public ModelCard? ModelCard { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(short? id)
+    {
+      if (id == null || _context.Abilities == null)
+      {
+        return NotFound();
+      }
+
+      Ability? entity = await _context.Abilities.FirstOrDefaultAsync(m => m.Id == id);
+      if (entity == null)
+      {
+        return NotFound();
+      }
+
+      ModelCard = await _context.ModelCards.FindAsync(entity.CardId);
+
+      ViewModel = _mapper.Map<AbilityViewModel>(entity);
+
+      return Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+      if (!ModelState.IsValid)
+      {
+        return Page();
+      }
+
+      Ability? original = await _context
+        .Abilities
+        .AsNoTracking()
+        .FirstOrDefaultAsync(m => m.Id == ViewModel.Id.Value);
+
+      if (original is null)
+        return NotFound();
+
+      Ability entity = _mapper.Map(ViewModel, original);
+
+      _context.Attach(entity).State = EntityState.Modified;
+
+      await _context.SaveChangesAsync();
+
+      return RedirectToPage("/ModelCards/Edit", new { id = ViewModel.CardId });
+    }
+  }
 }

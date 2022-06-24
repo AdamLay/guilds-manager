@@ -19,12 +19,10 @@ namespace GuildsManager.Web.Pages.ModelCards
       _mapper = mapper;
     }
 
-    [BindProperty]
-    public ModelCardViewModel ViewModel { get; set; } = default!;
+    [BindProperty] public ModelCardViewModel ViewModel { get; set; } = default!;
 
     public List<Ability> Abilities { get; set; }
     public List<Attack> Attacks { get; set; }
-    public List<ResistanceWeakness> ResistancesWeaknesses { get; set; }
 
     private async Task SetViewData()
     {
@@ -37,11 +35,6 @@ namespace GuildsManager.Web.Pages.ModelCards
 
       Abilities = await _context
         .Abilities
-        .Where(x => x.CardId == ViewModel.Id)
-        .ToListAsync();
-
-      ResistancesWeaknesses = await _context
-        .ResistancesWeaknesses
         .Where(x => x.CardId == ViewModel.Id)
         .ToListAsync();
     }
@@ -89,7 +82,7 @@ namespace GuildsManager.Web.Pages.ModelCards
 
       await _context.SaveChangesAsync();
 
-      return RedirectToPage("./Index");
+      return RedirectToPage("/Factions/Edit", new {id = entity.FactionId});
     }
   }
 }

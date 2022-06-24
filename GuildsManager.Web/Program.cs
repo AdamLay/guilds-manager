@@ -71,8 +71,10 @@ app.MapGet("/api/factions", async (GuildsDbContext context) =>
 
 app.MapGet("/api/model-cards", async ([FromQuery] short? factionId, GuildsDbContext context) =>
 {
-  DbSet<ModelCard> modelCards = context
-    .ModelCards;
+  var modelCards = context
+    .ModelCards
+    .Include(x => x.Attacks)
+    .Include(x => x.Abilities);
 
   return Results.Ok(factionId.HasValue
     ? modelCards.Where(x => x.FactionId == factionId).ToList()

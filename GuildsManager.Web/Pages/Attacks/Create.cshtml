@@ -2,60 +2,22 @@
 @model GuildsManager.Web.Pages.Attacks.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+  ViewData["Title"] = "Create Attack";
 }
 
-<h1>Create</h1>
-
-<h4>Attack</h4>
-<hr />
+<h1>Create Attack</h1>
+<h3>@Model.ModelCard?.Name</h3>
+<hr/>
 <div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Attack.CardId" class="control-label"></label>
-                <input asp-for="Attack.CardId" class="form-control" />
-                <span asp-validation-for="Attack.CardId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Attack.Name" class="control-label"></label>
-                <input asp-for="Attack.Name" class="form-control" />
-                <span asp-validation-for="Attack.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Attack.Attacks" class="control-label"></label>
-                <input asp-for="Attack.Attacks" class="form-control" />
-                <span asp-validation-for="Attack.Attacks" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Attack.AoE" /> @Html.DisplayNameFor(model => model.Attack.AoE)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Attack.Range" class="control-label"></label>
-                <input asp-for="Attack.Range" class="form-control" />
-                <span asp-validation-for="Attack.Range" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Attack.Arc" class="control-label"></label>
-                <input asp-for="Attack.Arc" class="form-control" />
-                <span asp-validation-for="Attack.Arc" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Attack.Element" class="control-label"></label>
-                <input asp-for="Attack.Element" class="form-control" />
-                <span asp-validation-for="Attack.Element" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+  <div class="col-md-6">
+    <form method="post">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      
+      <partial name="_Fields" for="ViewModel" />
+      
+      <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary"/>
+      </div>
+    </form>
+  </div>
 </div>
-
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
-

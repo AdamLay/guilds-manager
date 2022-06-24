@@ -3,7 +3,7 @@
 <div class="col-md-6">
   <div class="form-group">
     <label asp-for="FactionId" class="control-label">Faction</label>
-    <select asp-for="FactionId" class="form-control" asp-items="ViewBag.FactionId"></select>
+    <select asp-for="FactionId" class="form-select" asp-items="ViewBag.FactionId"></select>
     <p class="help">Which faction does this unit belong to?</p>
   </div>
 </div>
@@ -40,61 +40,83 @@
   </div>
 </div>
 
-<div class="col-md-3">
-  <div class="form-group">
-    <label asp-for="Might" class="control-label"></label>
-    <input asp-for="Might" class="form-control"/>
-    <span asp-validation-for="Might" class="text-danger"></span>
+<div class="col-md-12">
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label asp-for="HeroicWounds" class="control-label">Heroic Wounds</label>
+        <input asp-for="HeroicWounds" class="form-control"/>
+        <span asp-validation-for="HeroicWounds" class="text-danger"></span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label asp-for="Might" class="control-label"></label>
+        <input asp-for="Might" class="form-control"/>
+        <span asp-validation-for="Might" class="text-danger"></span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label asp-for="Dex" class="control-label"></label>
+        <input asp-for="Dex" class="form-control"/>
+        <span asp-validation-for="Dex" class="text-danger"></span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label asp-for="Def" class="control-label"></label>
+        <input asp-for="Def" class="form-control"/>
+        <span asp-validation-for="Def" class="text-danger"></span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label asp-for="Will" class="control-label"></label>
+        <input asp-for="Will" class="form-control"/>
+        <span asp-validation-for="Will" class="text-danger"></span>
+      </div>
+    </div>
   </div>
-</div>
-<div class="col-md-3">
-  <div class="form-group">
-    <label asp-for="Dex" class="control-label"></label>
-    <input asp-for="Dex" class="form-control"/>
-    <span asp-validation-for="Dex" class="text-danger"></span>
-  </div>
-</div>
-<div class="col-md-3">
-  <div class="form-group">
-    <label asp-for="Def" class="control-label"></label>
-    <input asp-for="Def" class="form-control"/>
-    <span asp-validation-for="Def" class="text-danger"></span>
-  </div>
-</div>
-<div class="col-md-3">
-  <div class="form-group">
-    <label asp-for="Will" class="control-label"></label>
-    <input asp-for="Will" class="form-control"/>
-    <span asp-validation-for="Will" class="text-danger"></span>
+  <div class="row">
+    <div class="col">
+      &nbsp;
+    </div>
+    <div class="col">
+      <div class="form-group form-check">
+        <label class="form-check-label">
+          <input class="form-check-input" asp-for="Healing"/> @Html.DisplayNameFor(model => model.Healing)
+        </label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group form-check">
+        <label class="form-check-label">
+          <input class="form-check-input" asp-for="IgnoreDifficultTerrain"/> @Html.DisplayNameFor(model => model.IgnoreDifficultTerrain)
+        </label>
+      </div>
+      <div class="form-group form-check">
+        <label class="form-check-label">
+          <input class="form-check-input" asp-for="Levitating"/> @Html.DisplayNameFor(model => model.Levitating)
+        </label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group form-check">
+        <label class="form-check-label">
+          <input class="form-check-input" asp-for="Shield"/> @Html.DisplayNameFor(model => model.Shield)
+        </label>
+      </div>
+    </div>
+    <div class="col">
+      &nbsp;
+    </div>
   </div>
 </div>
 
-<div class="col-md-3">
-  <div class="form-group form-check">
-    <label class="form-check-label">
-      <input class="form-check-input" asp-for="Healing"/> @Html.DisplayNameFor(model => model.Healing)
-    </label>
-  </div>
-</div>
-<div class="col-md-3">
-  <div class="form-group form-check">
-    <label class="form-check-label">
-      <input class="form-check-input" asp-for="IgnoreDifficultTerrain"/> @Html.DisplayNameFor(model => model.IgnoreDifficultTerrain)
-    </label>
-  </div>
-  <div class="form-group form-check">
-    <label class="form-check-label">
-      <input class="form-check-input" asp-for="Levitating"/> @Html.DisplayNameFor(model => model.Levitating)
-    </label>
-  </div>
-</div>
-<div class="col-md-3">
-  <div class="form-group form-check">
-    <label class="form-check-label">
-      <input class="form-check-input" asp-for="Shield"/> @Html.DisplayNameFor(model => model.Shield)
-    </label>
-  </div>
-</div>
-<div class="col-md-3">
-  &nbsp;
+<div class="col-md-12">
+  <label asp-for="RW" class="control-label">Resistances / Weaknesses</label>
+  <input asp-for="RW" class="form-control"/>
+  <span asp-validation-for="RW" class="text-danger"></span>
+  <p class="help">Any resistances or weaknesses the unit has. e.g. Frost Resistance, Thunder Immunity</p>
 </div>

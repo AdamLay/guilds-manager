@@ -5,7 +5,7 @@ namespace GuildsManager.Web.Data;
 public class ModelCard
 {
   [Key]
-  public int Id { get; set; }
+  public short Id { get; set; }
   
   public short FactionId { get; set; }
   public Faction Faction { get; set; }
@@ -30,10 +30,12 @@ public class ModelCard
   public byte Will { get; set; }
 
   public byte HeroicWounds { get; set; }
+  
+  [MaxLength(128)]
+  public string RW { get; set; }
 
   public List<Ability> Abilities { get; set; } = new ();
   public List<Attack> Attacks { get; set; } = new ();
-  public List<ResistanceWeakness> ResistancesWeaknesses { get; set; } = new ();
 
   public bool IsHero => Keywords.Split(",", StringSplitOptions.TrimEntries).Contains("Hero");
 }

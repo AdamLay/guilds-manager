@@ -1,44 +1,52 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using GuildsManager.Web.Data;
+using GuildsManager.Web.ViewModels.Attacks;
 
 namespace GuildsManager.Web.Pages.Attacks
 {
-    public class CreateModel : PageModel
+  public class CreateModel : PageModel
+  {
+    private readonly GuildsDbContext _context;
+    private readonly IMapper _mapper;
+
+    public CreateModel(GuildsDbContext context, IMapper mapper)
     {
-        private readonly GuildsManager.Web.Data.GuildsDbContext _context;
-
-        public CreateModel(GuildsManager.Web.Data.GuildsDbContext context)
-        {
-            _context = context;
-        }
-
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
-
-        [BindProperty]
-        public Attack Attack { get; set; } = default!;
-        
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
-        {
-          if (!ModelState.IsValid || _context.Attacks == null || Attack == null)
-            {
-                return Page();
-            }
-
-            _context.Attacks.Add(Attack);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
-        }
+      _context = context;
+      _mapper = mapper;
     }
+
+    [BindProperty]
+    public AttackViewModel ViewModel { get; set; } = new();
+    public ModelCard? ModelCard { get; set; }
+
+    public async Task<IActionResult> OnGet(short cardId)
+    {
+      ModelCard = await _context.ModelCards.FindAsync(cardId);
+
+      if (ModelCard is null)
+        return NotFound("Model card not found for id: " + cardId);
+
+      ViewModel.CardId = cardId;
+
+      return Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+      if (!ModelState.IsValid || _context.Attacks == null || ViewModel == null)
+      {
+        return Page();
+      }
+
+      var entity = _mapper.Map<Attack>(ViewModel);
+
+      _context.Attacks.Add(entity);
+
+      await _context.SaveChangesAsync();
+
+      return RedirectToPage("/ModelCards/Edit", new {id = ViewModel.CardId});
+    }
+  }
 }

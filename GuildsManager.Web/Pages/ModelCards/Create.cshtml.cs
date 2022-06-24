@@ -21,7 +21,8 @@ namespace GuildsManager.Web.Pages.ModelCards
 		[BindProperty]
 		public ModelCardViewModel ViewModel { get; set; } = new()
 		{
-			Slots = 1
+			Slots = 1,
+			UnitNumber = 1
 		};
 
 		private void SetViewData()
@@ -55,7 +56,7 @@ namespace GuildsManager.Web.Pages.ModelCards
 
 			await _context.SaveChangesAsync();
 
-			return RedirectToPage("./Index");
+			return RedirectToPage("/ModelCards/Edit", new { id = entity.Id });
 		}
 	}
 }
