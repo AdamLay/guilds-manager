@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GuildsManager.Web.Data;
 using GuildsManager.Web.ViewModels.ModelCards;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace GuildsManager.Web.Pages.ModelCards
 {
@@ -20,11 +19,31 @@ namespace GuildsManager.Web.Pages.ModelCards
       _mapper = mapper;
     }
 
-    [BindProperty] public ModelCardViewModel ViewModel { get; set; } = default!;
+    [BindProperty]
+    public ModelCardViewModel ViewModel { get; set; } = default!;
 
-    private void SetViewData()
+    public List<Ability> Abilities { get; set; }
+    public List<Attack> Attacks { get; set; }
+    public List<ResistanceWeakness> ResistancesWeaknesses { get; set; }
+
+    private async Task SetViewData()
     {
       ViewData["FactionId"] = new SelectList(_context.Factions, "Id", "Name");
+
+      Attacks = await _context
+        .Attacks
+        .Where(x => x.CardId == ViewModel.Id)
+        .ToListAsync();
+
+      Abilities = await _context
+        .Abilities
+        .Where(x => x.CardId == ViewModel.Id)
+        .ToListAsync();
+
+      ResistancesWeaknesses = await _context
+        .ResistancesWeaknesses
+        .Where(x => x.CardId == ViewModel.Id)
+        .ToListAsync();
     }
 
     public async Task<IActionResult> OnGetAsync(int? id)
@@ -41,7 +60,7 @@ namespace GuildsManager.Web.Pages.ModelCards
 
       ViewModel = _mapper.Map<ModelCardViewModel>(entity);
 
-      SetViewData();
+      await SetViewData();
 
       return Page();
     }
@@ -50,7 +69,7 @@ namespace GuildsManager.Web.Pages.ModelCards
     {
       if (!ModelState.IsValid)
       {
-        SetViewData();
+        await SetViewData();
         return Page();
       }
 
@@ -63,9 +82,9 @@ namespace GuildsManager.Web.Pages.ModelCards
 
       if (original is null)
         return NotFound();
-      
+
       ModelCard entity = _mapper.Map(ViewModel, original);
-      
+
       _context.Attach(entity).State = EntityState.Modified;
 
       await _context.SaveChangesAsync();

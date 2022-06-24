@@ -7,49 +7,55 @@ using GuildsManager.Web.ViewModels.ModelCards;
 
 namespace GuildsManager.Web.Pages.ModelCards
 {
-  public class CreateModel : PageModel
-  {
-    private readonly GuildsDbContext _context;
-    private readonly IMapper _mapper;
+	public class CreateModel : PageModel
+	{
+		private readonly GuildsDbContext _context;
+		private readonly IMapper _mapper;
 
-    public CreateModel(GuildsDbContext context, IMapper mapper)
-    {
-      _context = context;
-      _mapper = mapper;
-    }
+		public CreateModel(GuildsDbContext context, IMapper mapper)
+		{
+			_context = context;
+			_mapper = mapper;
+		}
 
-    [BindProperty]
-    public ModelCardViewModel ViewModel { get; set; } = new()
-    {
-      Slots = 1
-    };
-    
-    private void SetViewData()
-    {
-      ViewData["FactionId"] = new SelectList(_context.Factions, "Id", "Name");
-    }
-    
-    public IActionResult OnGet()
-    {
-      SetViewData();
-      return Page();
-    }
+		[BindProperty]
+		public ModelCardViewModel ViewModel { get; set; } = new()
+		{
+			Slots = 1
+		};
 
-    public async Task<IActionResult> OnPostAsync()
-    {
-      if (!ModelState.IsValid || _context.ModelCards == null || ViewModel == null)
-      {
-        SetViewData();
-        return Page();
-      }
+		private void SetViewData()
+		{
+			ViewData["FactionId"] = new SelectList(_context.Factions, "Id", "Name");
+		}
 
-      var entity = _mapper.Map<ModelCard>(ViewModel);
+		public IActionResult OnGet()
+		{
+			string factionId = HttpContext.Request.Query["factionId"];
+			if (!string.IsNullOrEmpty(factionId))
+			{
+				ViewModel.FactionId = short.Parse(factionId);
+			}
 
-      _context.ModelCards.Add(entity);
-      
-      await _context.SaveChangesAsync();
+			SetViewData();
+			return Page();
+		}
 
-      return RedirectToPage("./Index");
-    }
-  }
+		public async Task<IActionResult> OnPostAsync()
+		{
+			if (!ModelState.IsValid || _context.ModelCards == null || ViewModel == null)
+			{
+				SetViewData();
+				return Page();
+			}
+
+			var entity = _mapper.Map<ModelCard>(ViewModel);
+
+			_context.ModelCards.Add(entity);
+
+			await _context.SaveChangesAsync();
+
+			return RedirectToPage("./Index");
+		}
+	}
 }

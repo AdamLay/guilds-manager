@@ -4,21 +4,22 @@
 
 namespace GuildsManager.Web.Migrations
 {
-    public partial class AddResistanceWeakness : Migration
+    public partial class HeroicWounds : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "ResistanceWeaknessJson",
+            migrationBuilder.AddColumn<byte>(
+                name: "HeroicWounds",
                 table: "ModelCards",
-                type: "nvarchar(max)",
-                nullable: true);
+                type: "smallint",
+                nullable: false,
+                defaultValue: (byte)0);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "ResistanceWeaknessJson",
+                name: "HeroicWounds",
                 table: "ModelCards");
         }
     }

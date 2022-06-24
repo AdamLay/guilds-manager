@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-string conn = builder.Configuration.GetConnectionString("Local");
+string conn = builder.Configuration.GetConnectionString("Heroku");//"Local");
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -14,7 +14,8 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddDbContext<GuildsDbContext>(options =>
 {
   //options.UseSqlServer(conn);
-  options.UseInMemoryDatabase("Guilds");
+  //options.UseInMemoryDatabase("Guilds");
+  options.UseNpgsql(conn);
 });
 
 builder.Services.AddCors(options =>
@@ -34,8 +35,19 @@ if (!app.Environment.IsDevelopment())
 {
   app.UseExceptionHandler("/Error");
   // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-  app.UseHsts();
-  app.UseHttpsRedirection();
+  //app.UseHsts();
+  //app.UseHttpsRedirection();
+
+  app.Urls.Add("http://*:" + Environment.GetEnvironmentVariable("PORT"));
+}
+else
+{
+  app.Urls.Add("http://localhost:8080");
+}
+
+foreach (var url in app.Urls)
+{
+  Console.WriteLine("URL: " + url);
 }
 
 app.UseStaticFiles();

@@ -9,36 +9,40 @@ using GuildsManager.Web.Data;
 
 namespace GuildsManager.Web.Pages.Abilities
 {
-    public class CreateModel : PageModel
-    {
-        private readonly GuildsManager.Web.Data.GuildsDbContext _context;
+	public class CreateModel : PageModel
+	{
+		private readonly GuildsDbContext _context;
 
-        public CreateModel(GuildsManager.Web.Data.GuildsDbContext context)
-        {
-            _context = context;
-        }
+		public CreateModel(GuildsDbContext context)
+		{
+			_context = context;
+		}
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
+		public async Task<IActionResult> OnGet(short id)
+		{
+			var modelCard = await _context.ModelCards.FindAsync(id);
 
-        [BindProperty]
-        public Ability Ability { get; set; } = default!;
-        
+			if (modelCard is null)
+				return NotFound("Model card not found for id: " + id);
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
-        {
-          if (!ModelState.IsValid || _context.Abilities == null || Ability == null)
-            {
-                return Page();
-            }
+			return Page();
+		}
 
-            _context.Abilities.Add(Ability);
-            await _context.SaveChangesAsync();
+		[BindProperty]
+		public Ability Ability { get; set; } = default!;
 
-            return RedirectToPage("./Index");
-        }
-    }
+
+		public async Task<IActionResult> OnPostAsync()
+		{
+			if (!ModelState.IsValid || _context.Abilities == null || Ability == null)
+			{
+				return Page();
+			}
+
+			_context.Abilities.Add(Ability);
+			await _context.SaveChangesAsync();
+
+			return RedirectToPage("./Index");
+		}
+	}
 }

@@ -2,29 +2,89 @@
 @model GuildsManager.Web.Pages.ModelCards.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+	ViewData["Title"] = "Edit";
 }
 
 <h1>Edit Model Card</h1>
 
-<hr/>
+<hr />
 
 <form method="post">
-  <div asp-validation-summary="All" class="text-danger"></div>
+	<div asp-validation-summary="All" class="text-danger"></div>
 
-  <div class="row">
-    
-    <input type="hidden" asp-for="ViewModel.Id" />
-    
-    <partial name="_Fields" model="Model.ViewModel" />
-    
-    <div class="form-group mt-4">
-      <input type="submit" value="Save Changes" class="btn btn-primary"/>
-    </div>
-  </div>
+	<div class="row">
+
+		<input type="hidden" asp-for="ViewModel.Id" />
+
+		<partial name="_Fields" model="Model.ViewModel" />
+
+		<div class="form-group mt-4">
+			<input type="submit" value="Save Changes" class="btn btn-primary" />
+		</div>
+	</div>
 </form>
 
+<hr/>
+
+<h1>Abilities</h1>
+
+<p class="text-end">
+	<a class="btn btn-primary" asp-page="/Abilities/Create" asp-route-id="@Model.ViewModel.Id">Add New Ability</a>
+</p>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Text</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.Abilities)
+		{
+			<tr>
+				<td>@item.Name</td>
+				<td>@item.Text</td>
+				<td>
+					<a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+					<a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+<hr/>
+
+<h1>Attacks</h1>
+
+<p class="text-end">
+	<a class="btn btn-primary" asp-page="/Attacks/Create">Add New Attack</a>
+</p>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Text</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.Abilities)
+		{
+			<tr>
+				<td>@item.Name</td>
+				<td>@item.Text</td>
+				<td>
+					<a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+					<a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
 <div>
-    <a asp-page="./Index">Back to List</a>
+	<a asp-page="./Index">Back to List</a>
 </div>
 
