@@ -71,6 +71,15 @@ app.MapGet("/api/factions", async (GuildsDbContext context) =>
   return Results.Ok(factions);
 });
 
+app.MapGet("/api/spells", async (GuildsDbContext context) =>
+{
+  List<Spell> spells = await context
+    .Spells
+    .ToListAsync();
+
+  return Results.Ok(spells);
+});
+
 app.MapGet("/api/model-cards", async ([FromQuery] short? factionId,
   GuildsDbContext context, IMapper mapper) =>
 {

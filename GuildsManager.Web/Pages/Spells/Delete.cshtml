@@ -1,0 +1,81 @@
+@page
+@model GuildsManager.Web.Pages.Spells.DeleteModel
+
+@{
+  ViewData["Title"] = "Delete Spell";
+}
+
+<h1>Delete Spell</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+  <hr/>
+  <dl class="row">
+    <dt class="col-sm-2">
+      @Html.DisplayNameFor(model => model.ViewModel.School)
+    </dt>
+    <dd class="col-sm-10">
+      @Html.DisplayFor(model => model.ViewModel.School)
+    </dd>
+    <dt class="col-sm-2">
+      @Html.DisplayNameFor(model => model.ViewModel.Name)
+    </dt>
+    <dd class="col-sm-10">
+      @Html.DisplayFor(model => model.ViewModel.Name)
+    </dd>
+    <dt class="col-sm-2">
+      @Html.DisplayNameFor(model => model.ViewModel.Rank)
+    </dt>
+    <dd class="col-sm-10">
+      @Html.DisplayFor(model => model.ViewModel.Rank)
+    </dd>
+    <dt class="col-sm-2">
+      @Html.DisplayNameFor(model => model.ViewModel.Roll)
+    </dt>
+    <dd class="col-sm-10">
+      @Html.DisplayFor(model => model.ViewModel.Roll)
+    </dd>
+    <dt class="col-sm-2">
+      @Html.DisplayNameFor(model => model.ViewModel.AoE)
+    </dt>
+    <dd class="col-sm-10">
+      @Html.DisplayFor(model => model.ViewModel.AoE)
+    </dd>
+    <dt class="col-sm-2">
+      @Html.DisplayNameFor(model => model.ViewModel.Vs)
+    </dt>
+    <dd class="col-sm-10">
+      @Html.DisplayFor(model => model.ViewModel.Vs)
+    </dd>
+    <dt class="col-sm-2">
+      @Html.DisplayNameFor(model => model.ViewModel.Range)
+    </dt>
+    <dd class="col-sm-10">
+      @Html.DisplayFor(model => model.ViewModel.Range)
+    </dd>
+    <dt class="col-sm-2">
+      @Html.DisplayNameFor(model => model.ViewModel.Self)
+    </dt>
+    <dd class="col-sm-10">
+      @Html.DisplayFor(model => model.ViewModel.Self)
+    </dd>
+    <dt class="col-sm-2">
+      @Html.DisplayNameFor(model => model.ViewModel.InVision)
+    </dt>
+    <dd class="col-sm-10">
+      @Html.DisplayFor(model => model.ViewModel.InVision)
+    </dd>
+    <dt class="col-sm-2">
+      @Html.DisplayNameFor(model => model.ViewModel.Effect)
+    </dt>
+    <dd class="col-sm-10">
+      @Html.DisplayFor(model => model.ViewModel.Effect)
+    </dd>
+  </dl>
+
+  <form method="post">
+    <input type="hidden" asp-for="ViewModel.Id"/>
+    <input type="submit" value="Delete" class="btn btn-danger"/> |
+    <a asp-page="./Index">Back to List</a>
+  </form>
+</div>

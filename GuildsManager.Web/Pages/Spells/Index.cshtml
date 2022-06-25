@@ -1,0 +1,60 @@
+@page
+@using GuildsManager.Web.Data
+@model GuildsManager.Web.Pages.Spells.IndexModel
+
+@{
+  ViewData["Title"] = "Spells";
+}
+
+<div class="d-flex align-items-center mb-2">
+  <h1 style="flex:1">Spells</h1>
+
+  <a class="btn btn-primary" asp-page="Create">Create New</a>
+</div>
+
+@foreach (var group in Model.Spells.GroupBy(x => x.School))
+{
+  <h2>@group.Key</h2>
+  <hr/>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Rank</th>
+      <th>Roll</th>
+      <th>Vs</th>
+      <th>Range</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (Spell item in Model.Spells)
+    {
+      <tr>
+        <td>@item.Name</td>
+        <td>@item.Rank</td>
+        <td>@item.Roll @(item.AoE ? "AoE" : string.Empty) ATK</td>
+        <td>@item.Vs</td>
+        <td>
+          @if (item.Range.HasValue)
+          {
+            <span>@item.Range&quot;</span>
+          }
+          else if (item.Self)
+          {
+            <span>Self</span>
+          }
+          else if (item.InVision)
+          {
+            <span>In Vision</span>
+          }
+        </td>
+        <td>
+          <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+          <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+        </td>
+      </tr>
+    }
+    </tbody>
+  </table>
+}

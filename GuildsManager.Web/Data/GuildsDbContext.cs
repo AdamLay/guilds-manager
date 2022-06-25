@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using GuildsManager.Web.ViewModels.Spells;
 
 namespace GuildsManager.Web.Data;
 
@@ -13,4 +14,5 @@ public class GuildsDbContext : DbContext
   public DbSet<ModelCard> ModelCards { get; set; }
   public DbSet<Ability> Abilities { get; set; }
   public DbSet<Attack> Attacks { get; set; }
+  public DbSet<Spell> Spells { get; set; }
 }

@@ -3,6 +3,7 @@ using System;
 using GuildsManager.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GuildsManager.Web.Migrations
 {
     [DbContext(typeof(GuildsDbContext))]
-    partial class GuildsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220625122055_Spells")]
+    partial class Spells
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -189,11 +191,11 @@ namespace GuildsManager.Web.Migrations
 
             modelBuilder.Entity("GuildsManager.Web.Data.Spell", b =>
                 {
-                    b.Property<short>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<short>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("AoE")
                         .HasColumnType("boolean");

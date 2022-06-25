@@ -1,0 +1,71 @@
+﻿@using GuildsManager.Web.Data
+@model GuildsManager.Web.ViewModels.Spells.SpellViewModel
+
+@{
+  var schools = Enum.GetValues<SpellSchool>()
+    .Select(x => new SelectListItem
+    {
+      Value = ((byte) x).ToString(),
+      Text = x.ToString()
+    }).ToList();
+  
+  var stats = Enum.GetValues<Stat>()
+    .Select(x => new SelectListItem
+    {
+      Value = ((byte) x).ToString(),
+      Text = x.ToString()
+    }).ToList();
+  
+  stats.Insert(0, new SelectListItem{ Value = "", Text = "Select..." });
+}
+
+<div class="form-group">
+  <label asp-for="School" class="control-label"></label>
+  <select asp-for="School" class="form-select" asp-items="@schools"></select>
+  <span asp-validation-for="School" class="text-danger"></span>
+</div>
+<div class="form-group">
+  <label asp-for="Name" class="control-label"></label>
+  <input asp-for="Name" class="form-control"/>
+  <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+<div class="form-group">
+  <label asp-for="Rank" class="control-label"></label>
+  <input asp-for="Rank" class="form-control"/>
+  <span asp-validation-for="Rank" class="text-danger"></span>
+</div>
+<div class="form-group">
+  <label asp-for="Roll" class="control-label">Roll (ATK)</label>
+  <input asp-for="Roll" class="form-control"/>
+  <span asp-validation-for="Roll" class="text-danger"></span>
+</div>
+<div class="form-group form-check">
+  <label class="form-check-label">
+    <input class="form-check-input" asp-for="AoE"/> AoE
+  </label>
+</div>
+<div class="form-group">
+  <label asp-for="Vs" class="control-label"></label>
+  <select asp-for="Vs" class="form-select" asp-items="@stats"></select>
+  <span asp-validation-for="Vs" class="text-danger"></span>
+</div>
+<div class="form-group">
+  <label asp-for="Range" class="control-label"></label>
+  <input asp-for="Range" class="form-control"/>
+  <span asp-validation-for="Range" class="text-danger"></span>
+</div>
+<div class="form-group form-check">
+  <label class="form-check-label">
+    <input class="form-check-input" asp-for="Self"/> Self
+  </label>
+</div>
+<div class="form-group form-check">
+  <label class="form-check-label">
+    <input class="form-check-input" asp-for="InVision"/> In Vision
+  </label>
+</div>
+<div class="form-group">
+  <label asp-for="Effect" class="control-label"></label>
+  <textarea asp-for="Effect" class="form-control" rows="5"></textarea>
+  <span asp-validation-for="Effect" class="text-danger"></span>
+</div>
