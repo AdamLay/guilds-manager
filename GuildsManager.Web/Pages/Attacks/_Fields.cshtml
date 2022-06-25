@@ -8,7 +8,9 @@
     {
       Value = ((byte) x).ToString(),
       Text = x.ToString()
-    });
+    }).ToList();
+
+  elements.Insert(0, new SelectListItem{ Value = "", Text = "Select element..." });
 }
 
 <input type="hidden" asp-for="CardId"/>
