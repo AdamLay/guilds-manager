@@ -6,5 +6,6 @@ public enum Element
   Poison,
   Thunder,
   AquaticTerrain,
-  Frost
+  Frost,
+  Energy
 }
