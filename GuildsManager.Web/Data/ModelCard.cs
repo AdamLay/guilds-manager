@@ -36,6 +36,4 @@ public class ModelCard
 
   public List<Ability> Abilities { get; set; } = new ();
   public List<Attack> Attacks { get; set; } = new ();
-
-  public bool IsHero => Keywords.Split(",", StringSplitOptions.TrimEntries).Contains("Hero");
 }

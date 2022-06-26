@@ -12,7 +12,7 @@ public class Ability
   [JsonIgnore]
   public ModelCard Card { get; set; }
 
-  [MaxLength(32)]
+  [MaxLength(64)]
   public string Name { get; set; }
   
   [MaxLength(512)]

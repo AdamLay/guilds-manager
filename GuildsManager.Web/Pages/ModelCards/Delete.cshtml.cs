@@ -9,54 +9,54 @@ using GuildsManager.Web.Data;
 
 namespace GuildsManager.Web.Pages.ModelCards
 {
-    public class DeleteModel : PageModel
+  public class DeleteModel : PageModel
+  {
+    private readonly GuildsDbContext _context;
+
+    public DeleteModel(GuildsDbContext context)
     {
-        private readonly GuildsManager.Web.Data.GuildsDbContext _context;
-
-        public DeleteModel(GuildsManager.Web.Data.GuildsDbContext context)
-        {
-            _context = context;
-        }
-
-        [BindProperty]
-      public ModelCard ModelCard { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null || _context.ModelCards == null)
-            {
-                return NotFound();
-            }
-
-            var modelcard = await _context.ModelCards.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (modelcard == null)
-            {
-                return NotFound();
-            }
-            else 
-            {
-                ModelCard = modelcard;
-            }
-            return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
-            if (id == null || _context.ModelCards == null)
-            {
-                return NotFound();
-            }
-            var modelcard = await _context.ModelCards.FindAsync(id);
-
-            if (modelcard != null)
-            {
-                ModelCard = modelcard;
-                _context.ModelCards.Remove(ModelCard);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
-        }
+      _context = context;
     }
+
+    [BindProperty] public ModelCard ModelCard { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
+    {
+      if (id == null || _context.ModelCards == null)
+      {
+        return NotFound();
+      }
+
+      var entity = await _context
+        .ModelCards
+        .Include(x => x.Faction)
+        .FirstOrDefaultAsync(m => m.Id == id);
+
+      if (entity == null)
+      {
+        return NotFound();
+      }
+
+      ModelCard = entity;
+
+      return Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync(short? id)
+    {
+      if (id == null || _context.ModelCards == null)
+      {
+        return NotFound();
+      }
+
+      var entity = await _context.ModelCards.FindAsync(id);
+
+      if (entity == null) return NotFound();
+      short factionId = entity.FactionId;
+      _context.ModelCards.Remove(entity);
+      await _context.SaveChangesAsync();
+
+      return RedirectToPage("/Factions/Edit", new { id = factionId });
+    }
+  }
 }

@@ -2,99 +2,51 @@
 @model GuildsManager.Web.Pages.ModelCards.DeleteModel
 
 @{
-    ViewData["Title"] = "Delete";
+  ViewData["Title"] = "Delete";
 }
 
 <h1>Delete</h1>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>ModelCard</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModelCard.Faction)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModelCard.Faction.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModelCard.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModelCard.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModelCard.Keywords)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModelCard.Keywords)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModelCard.Slots)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModelCard.Slots)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModelCard.UnitNumber)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModelCard.UnitNumber)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModelCard.Might)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModelCard.Might)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModelCard.Healing)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModelCard.Healing)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModelCard.Dex)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModelCard.Dex)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModelCard.IgnoreDifficultTerrain)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModelCard.IgnoreDifficultTerrain)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModelCard.Levitating)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModelCard.Levitating)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModelCard.Will)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModelCard.Will)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModelCard.Def)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModelCard.Def)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModelCard.Shield)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModelCard.Shield)
-        </dd>
-    </dl>
-    
-    <form method="post">
-        <input type="hidden" asp-for="ModelCard.Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
-    </form>
+  <h4>ModelCard</h4>
+  <hr/>
+  <dl class="row">
+    <dt class="col-sm-2">
+      @Html.DisplayNameFor(model => model.ModelCard.Faction)
+    </dt>
+    <dd class="col-sm-10">
+      @Html.DisplayFor(model => model.ModelCard.Faction.Name)
+    </dd>
+    <dt class="col-sm-2">
+      @Html.DisplayNameFor(model => model.ModelCard.Name)
+    </dt>
+    <dd class="col-sm-10">
+      @Html.DisplayFor(model => model.ModelCard.Name)
+    </dd>
+    <dt class="col-sm-2">
+      @Html.DisplayNameFor(model => model.ModelCard.Keywords)
+    </dt>
+    <dd class="col-sm-10">
+      @Html.DisplayFor(model => model.ModelCard.Keywords)
+    </dd>
+    <dt class="col-sm-2">
+      @Html.DisplayNameFor(model => model.ModelCard.Slots)
+    </dt>
+    <dd class="col-sm-10">
+      @Html.DisplayFor(model => model.ModelCard.Slots)
+    </dd>
+    <dt class="col-sm-2">
+      @Html.DisplayNameFor(model => model.ModelCard.UnitNumber)
+    </dt>
+    <dd class="col-sm-10">
+      @Html.DisplayFor(model => model.ModelCard.UnitNumber)
+    </dd>
+  </dl>
+
+  <form method="post">
+    <input type="hidden" asp-for="ModelCard.Id"/>
+    <input type="submit" value="Delete" class="btn btn-danger"/> |
+    <a asp-page="./Index">Back to List</a>
+  </form>
 </div>
