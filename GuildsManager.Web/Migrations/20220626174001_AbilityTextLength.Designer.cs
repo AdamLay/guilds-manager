@@ -3,6 +3,7 @@ using System;
 using GuildsManager.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GuildsManager.Web.Migrations
 {
     [DbContext(typeof(GuildsDbContext))]
-    partial class GuildsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220626174001_AbilityTextLength")]
+    partial class AbilityTextLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

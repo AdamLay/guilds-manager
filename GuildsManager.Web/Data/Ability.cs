@@ -15,7 +15,7 @@ public class Ability
   [MaxLength(64)]
   public string Name { get; set; }
   
-  [MaxLength(512)]
+  [MaxLength(1024)]
   public string Text { get; set; }
   
   public bool Passive { get; set; }
