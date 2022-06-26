@@ -12,7 +12,7 @@ namespace GuildsManager.Web.ViewModels.Abilities
     public string Name { get; set; }
 
     [Required]
-    [MaxLength(512)]
+    [MaxLength(1024)]
     public string Text { get; set; }
 
     public bool Passive { get; set; }
