@@ -1,0 +1,27 @@
+﻿@model GuildsManager.Web.ViewModels.Abilities.AbilityViewModel
+
+<div class="form-group">
+  <label asp-for="Name" class="control-label"></label>
+  <input asp-for="Name" class="form-control"/>
+  <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+<div class="form-group">
+  <label asp-for="Text" class="control-label"></label>
+  <textarea rows="5" asp-for="Text" class="form-control"></textarea>
+  <span asp-validation-for="Text" class="text-danger"></span>
+</div>
+<div class="form-group form-check">
+  <label class="form-check-label">
+    <input class="form-check-input" asp-for="Passive"/> Passive
+  </label>
+</div>
+<div class="form-group form-check">
+  <label class="form-check-label">
+    <input class="form-check-input" asp-for="Fatigue"/> Fatigue
+  </label>
+</div>
+<div class="form-group form-check">
+  <label class="form-check-label">
+    <input class="form-check-input" asp-for="Torment"/> Torment
+  </label>
+</div>

@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Abilities" />
     <Folder Include="Pages\Factions" />
   </ItemGroup>
 
