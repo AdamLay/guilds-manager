@@ -44,7 +44,8 @@ if (!app.Environment.IsDevelopment())
 }
 else
 {
-  app.Urls.Add("http://localhost:8080");
+  app.Urls.Add("http://0.0.0.0:8080");
+  app.Urls.Add("http://[::]:8080");
 }
 
 foreach (var url in app.Urls)
