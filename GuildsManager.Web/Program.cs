@@ -1,10 +1,8 @@
-using System.IdentityModel.Tokens.Jwt;
 using AutoMapper;
 using GuildsManager.Web.Data;
 using GuildsManager.Web.Responses;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -34,7 +32,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services
-  .AddAuthentication()
+  .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
   .AddCookie(options =>
   {
     options.LoginPath = "/login";
