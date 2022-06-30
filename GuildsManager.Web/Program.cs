@@ -1,7 +1,10 @@
+using System.IdentityModel.Tokens.Jwt;
 using AutoMapper;
 using GuildsManager.Web.Data;
 using GuildsManager.Web.Responses;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -29,6 +32,13 @@ builder.Services.AddCors(options =>
     policy.AllowAnyHeader();
   });
 });
+
+builder.Services
+  .AddAuthentication()
+  .AddCookie(options =>
+  {
+    options.LoginPath = "/login";
+  });
 
 WebApplication app = builder.Build();
 
@@ -59,9 +69,10 @@ app.UseCors();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapRazorPages();
+app.MapRazorPages().RequireAuthorization();
 
 app.MapGet("/api/factions", async (GuildsDbContext context) =>
 {

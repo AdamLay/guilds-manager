@@ -15,4 +15,6 @@ public class GuildsDbContext : DbContext
   public DbSet<Ability> Abilities { get; set; }
   public DbSet<Attack> Attacks { get; set; }
   public DbSet<Spell> Spells { get; set; }
+  
+  public DbSet<User> Users { get; set; }
 }
