@@ -46,8 +46,12 @@
       <td>@item.Name</td>
       <td>@item.Text</td>
       <td>
-        <a asp-page="/Abilities/Edit" asp-route-id="@item.Id">Edit</a> |
-        <a asp-page="/Abilities/Delete" asp-route-id="@item.Id">Delete</a>
+        <div class="d-flex flex-grow-0" style="align-items: center">
+          <div class="d-flex">
+            <a class="btn btn-sm btn-secondary me-2" asp-page="/Abilities/Edit" asp-route-id="@item.Id">Edit</a>
+            <a class="btn btn-sm btn-danger" asp-page="/Abilities/Delete" asp-route-id="@item.Id">Delete</a>
+          </div>
+        </div>
       </td>
     </tr>
   }
@@ -94,8 +98,12 @@
       </td>
       <td>@item.Element</td>
       <td>
-        <a asp-page="/Attacks/Edit" asp-route-id="@item.Id">Edit</a> |
-        <a asp-page="/Attacks/Delete" asp-route-id="@item.Id">Delete</a>
+        <div class="d-flex flex-grow-0" style="align-items: center">
+          <div class="d-flex">
+            <a class="btn btn-sm btn-secondary me-2" asp-page="/Attacks/Edit" asp-route-id="@item.Id">Edit</a>
+            <a class="btn btn-sm btn-danger" asp-page="/Attacks/Delete" asp-route-id="@item.Id">Delete</a>
+          </div>
+        </div>
       </td>
     </tr>
   }
