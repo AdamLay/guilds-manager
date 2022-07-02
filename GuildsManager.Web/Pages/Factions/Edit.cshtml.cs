@@ -33,6 +33,8 @@ namespace GuildsManager.Web.Pages.Factions
 
       ModelCards = await _context.ModelCards
         .Where(x => x.FactionId == id)
+        .Include(x => x.Attacks)
+        .Include(x => x.Abilities)
         .ToListAsync();
 
       Faction = faction;
